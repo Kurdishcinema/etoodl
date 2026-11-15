@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>EtooDL | حمّلها — تنزيل فيديوهات من كل المواقع</title>
+<meta name="description" content="حمّل فيديوهات من يوتيوب وتيك توك وانستغرام وفيسبوك وX وأكثر من 1000 موقع — مجاناً وبدون علامة مائية.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬇️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#08070f; --card:rgba(255,255,255,.055); --line:rgba(255,255,255,.1);
+  --gold:#f5c542; --gold2:#ffdf7e; --vio:#7c3aed; --vio2:#a78bfa;
+  --txt:#f4f2ff; --mut:#b7b3cc; --ok:#34d399; --err:#fb7185;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Tajawal',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-2;background:
+  radial-gradient(700px 420px at 85% -5%,rgba(124,58,237,.38),transparent 60%),
+  radial-gradient(650px 420px at 8% 12%,rgba(245,197,66,.16),transparent 60%),
+  radial-gradient(900px 600px at 50% 115%,rgba(124,58,237,.22),transparent 60%),var(--bg)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;opacity:.35;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.14) 1px,transparent 1px);background-size:26px 26px;
+  mask-image:linear-gradient(to bottom,black,transparent 55%)}
+.wrap{max-width:880px;margin:0 auto;padding:22px 16px 60px}
+header{display:flex;align-items:center;justify-content:space-between;padding:6px 2px 0}
+.logo{display:flex;align-items:center;gap:11px;font-weight:900;font-size:27px;letter-spacing:.3px}
+.logo .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:23px;
+  background:linear-gradient(135deg,var(--vio),#4c1d95);border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 8px 28px rgba(124,58,237,.5)}
+.logo b{background:linear-gradient(90deg,var(--gold2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.badge{font-size:12.5px;font-weight:700;color:var(--gold2);border:1px solid rgba(245,197,66,.4);
+  background:rgba(245,197,66,.08);padding:6px 12px;border-radius:999px}
+.hero{text-align:center;padding:44px 6px 8px}
+.hero h1{font-size:clamp(31px,6.4vw,52px);font-weight:900;line-height:1.25}
+.hero h1 .g{background:linear-gradient(90deg,var(--gold2),var(--gold) 55%,#ff9d5c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--mut);font-size:clamp(15px,3.6vw,18.5px);margin-top:12px;line-height:1.9}
+.panel{margin-top:30px;background:var(--card);border:1px solid var(--line);border-radius:24px;
+  padding:20px;backdrop-filter:blur(14px);box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.urlrow{display:flex;gap:10px}
+.urlbox{flex:1;display:flex;align-items:center;gap:9px;background:rgba(0,0,0,.38);border:1.5px solid var(--line);
+  border-radius:16px;padding:0 14px;transition:.2s}
+.urlbox:focus-within{border-color:var(--gold);box-shadow:0 0 0 4px rgba(245,197,66,.13)}
+.urlbox span{font-size:19px}
+.urlbox input{flex:1;background:none;border:none;outline:none;color:var(--txt);font-family:inherit;
+  font-size:16.5px;padding:15px 0;direction:ltr;text-align:left;min-width:0}
+.urlbox input::placeholder{color:#8d89a5;direction:rtl;text-align:right}
+.iconbtn{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--txt);border-radius:12px;
+  padding:9px 13px;font-family:inherit;font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap;transition:.15s}
+.iconbtn:hover{background:rgba(255,255,255,.14)}
+.opts{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.opt{flex:1;min-width:150px}
+.opt label{display:block;font-size:13px;color:var(--mut);font-weight:700;margin-bottom:6px}
+.opt select{width:100%;background:rgba(0,0,0,.38);border:1.5px solid var(--line);color:var(--txt);
+  border-radius:13px;padding:12px;font-family:inherit;font-size:15px;font-weight:700;outline:none;cursor:pointer}
+.bigbtn{width:100%;margin-top:16px;border:none;cursor:pointer;border-radius:16px;padding:17px;
+  font-family:inherit;font-size:19.5px;font-weight:900;color:#231a02;
+  background:linear-gradient(90deg,var(--gold2),var(--gold));box-shadow:0 12px 34px rgba(245,197,66,.35);
+  transition:.15s;display:flex;align-items:center;justify-content:center;gap:10px}
+.bigbtn:hover{transform:translateY(-1.5px);box-shadow:0 16px 40px rgba(245,197,66,.45)}
+.bigbtn:active{transform:scale(.99)}
+.bigbtn:disabled{opacity:.55;cursor:wait;transform:none}
+.detect{margin-top:12px;font-size:14px;color:var(--mut);min-height:21px;text-align:center}
+.detect b{color:var(--vio2)}
+.status{margin-top:14px;border-radius:14px;padding:13px 15px;font-size:15px;line-height:1.8;display:none}
+.status.show{display:block}
+.status.work{background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.35)}
+.status.err{background:rgba(251,113,133,.09);border:1px solid rgba(251,113,133,.4);color:#fecdd3}
+.spin{width:17px;height:17px;border:2.5px solid rgba(255,255,255,.25);border-top-color:var(--gold);
+  border-radius:50%;display:inline-block;vertical-align:-3px;animation:sp .7s linear infinite;margin-left:7px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.result{margin-top:18px;display:none}
+.result.show{display:block;animation:up .35s ease}
+@keyframes up{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.rcard{background:rgba(0,0,0,.32);border:1px solid var(--line);border-radius:18px;padding:15px}
+.rhead{display:flex;gap:13px;align-items:flex-start}
+.rhead img{width:104px;height:78px;object-fit:cover;border-radius:12px;border:1px solid var(--line);flex-shrink:0;background:#111}
+.rhead h3{font-size:16.5px;line-height:1.7;font-weight:800}
+.rhead .sub{color:var(--mut);font-size:13px;margin-top:3px}
+.sec{margin:16px 0 8px;font-size:14px;font-weight:800;color:var(--gold2)}
+.dlgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:9px}
+.dl{display:flex;flex-direction:column;gap:2px;text-decoration:none;background:linear-gradient(160deg,rgba(124,58,237,.24),rgba(124,58,237,.08));
+  border:1px solid rgba(167,139,250,.4);color:var(--txt);border-radius:13px;padding:11px 13px;transition:.15s}
+.dl:hover{border-color:var(--gold);transform:translateY(-1px)}
+.dl b{font-size:15.5px}
+.dl small{color:var(--mut);font-size:12.5px}
+.dl.gold{background:linear-gradient(160deg,rgba(245,197,66,.28),rgba(245,197,66,.08));border-color:rgba(245,197,66,.55)}
+.imgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:9px}
+.imgs a{display:block;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.imgs img{width:100%;height:110px;object-fit:cover;display:block}
+details{margin-top:10px}
+summary{cursor:pointer;color:var(--mut);font-size:14px;font-weight:700;padding:6px 0}
+.plats{margin-top:42px;text-align:center}
+.plats h2,.how h2,.faq h2{font-size:24px;font-weight:900}
+.plats p{color:var(--mut);margin-top:7px;font-size:15px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px;margin-top:20px}
+.plat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 8px;font-weight:800;font-size:15px}
+.plat span{display:block;font-size:25px;margin-bottom:7px}
+.how{margin-top:44px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:11px;margin-top:19px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:19px}
+.step .n{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:900;color:#231a02;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));margin-bottom:11px}
+.step h3{font-size:16.5px;margin-bottom:6px}
+.step p{color:var(--mut);font-size:14px;line-height:1.85}
+.faq{margin-top:44px}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:6px 17px;margin-top:10px}
+.faq summary{font-size:15.5px;color:var(--txt);padding:11px 0}
+.faq details p{color:var(--mut);font-size:14.5px;line-height:1.9;padding:0 0 14px}
+.hist{margin-top:44px;display:none}
+.hist.show{display:block}
+.hist .top{display:flex;align-items:center;justify-content:space-between}
+.hist h2{font-size:21px;font-weight:900}
+.hitem{display:flex;gap:11px;align-items:center;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:10px 13px;margin-top:9px;cursor:pointer;transition:.15s}
+.hitem:hover{border-color:rgba(245,197,66,.5)}
+.hitem img{width:56px;height:42px;object-fit:cover;border-radius:8px;background:#111}
+.hitem div{min-width:0}
+.hitem b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hitem small{color:var(--mut);font-size:12px;direction:ltr;display:block;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+footer{margin-top:52px;text-align:center;color:var(--mut);font-size:13.5px;line-height:2;border-top:1px solid var(--line);padding-top:22px}
+footer b{color:var(--gold2)}
+@media(max-width:560px){.urlrow{flex-direction:column}.rhead img{width:86px;height:64px}.badge{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo"><div class="ic">⬇️</div><div>Etoo<b>DL</b></div></div>
+    <div class="badge">مجاني • بدون تسجيل • بدون إعلانات مزعجة</div>
+  </header>
+
+  <section class="hero">
+    <h1>الصق الرابط… <span class="g">وحمّلها فوراً</span> 🎬</h1>
+    <p>نزّل فيديوهات من يوتيوب وتيك توك وانستغرام وفيسبوك وX وأكثر من ألف موقع،<br>بجودة عالية وتيك توك بدون علامة مائية — كلّه من متصفحك مباشرة.</p>
+  </section>
+
+  <section class="panel">
+    <div class="urlrow">
+      <div class="urlbox"><span>🔗</span><input id="url" type="url" inputmode="url" placeholder="الصق رابط الفيديو هنا…" autocomplete="off"></div>
+      <button class="iconbtn" id="pasteBtn">📋 لصق</button>
+      <button class="iconbtn" id="clearBtn">مسح</button>
+    </div>
+    <div class="opts">
+      <div class="opt"><label>الجودة المفضلة</label>
+        <select id="quality">
+          <option value="1080">1080p Full HD</option>
+          <option value="720" selected>720p HD</option>
+          <option value="480">480p</option>
+          <option value="360">360p</option>
+          <option value="2160">2160p ‏4K</option>
+          <option value="1440">1440p ‏2K</option>
+          <option value="240">240p</option>
+        </select></div>
+      <div class="opt"><label>النوع</label>
+        <select id="mode">
+          <option value="auto" selected>🎬 فيديو + صوت</option>
+          <option value="audio">🎵 صوت فقط MP3</option>
+          <option value="mute">🔇 فيديو بدون صوت</option>
+        </select></div>
+    </div>
+    <button class="bigbtn" id="goBtn">⬇️ حمّل هسه</button>
+    <div class="detect" id="detect"></div>
+    <div class="status" id="status"></div>
+    <div class="result" id="result"></div>
+  </section>
+
+  <section class="plats">
+    <h2>مواقع مدعومة 🌍</h2>
+    <p>أكثر من 1000 موقع — هاي أشهرها:</p>
+    <div class="pgrid">
+      <div class="plat"><span>▶️</span>يوتيوب</div>
+      <div class="plat"><span>🎵</span>تيك توك</div>
+      <div class="plat"><span>📸</span>انستغرام</div>
+      <div class="plat"><span>👍</span>فيسبوك</div>
+      <div class="plat"><span>𝕏</span>تويتر / X</div>
+      <div class="plat"><span>🎬</span>فيميو</div>
+      <div class="plat"><span>📺</span>ديلي موشن</div>
+      <div class="plat"><span>🟣</span>تويتش</div>
+      <div class="plat"><span>☁️</span>ساوند كلاود</div>
+      <div class="plat"><span>👽</span>ريديت</div>
+      <div class="plat"><span>📌</span>بينترست</div>
+      <div class="plat"><span>👻</span>سناب شات</div>
+      <div class="plat"><span>📘</span>VK</div>
+      <div class="plat"><span>🅱️</span>بيليبيلي</div>
+      <div class="plat"><span>🎞️</span>OK.ru</div>
+      <div class="plat"><span>➕</span>وألف غيرها</div>
+    </div>
+  </section>
+
+  <section class="how">
+    <h2>شلون يشتغل؟ 🤔</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>انسخ الرابط</h3><p>من أي تطبيق أو موقع: يوتيوب، تيك توك، انستغرام… انسخ رابط الفيديو.</p></div>
+      <div class="step"><div class="n">2</div><h3>الصقه هنا</h3><p>الصق الرابط بالمربع فوق، اختر الجودة، واضغط «حمّل هسه».</p></div>
+      <div class="step"><div class="n">3</div><h3>نزّل واحفظ</h3><p>تظهر لك أزرار التنزيل بكل الجودات المتوفرة — اختر ونزّل مباشرة لجهازك.</p></div>
+    </div>
+  </section>
+
+  <section class="hist" id="histSec">
+    <div class="top"><h2>🕘 آخر تنزيلاتك</h2><button class="iconbtn" id="histClear">حذف الكل</button></div>
+    <div id="histList"></div>
+  </section>
+
+  <section class="faq">
+    <h2>أسئلة شائعة ❓</h2>
+    <details><summary>هل التنزيل مجاني فعلاً؟</summary><p>إي، مجاني بالكامل وبدون حساب أو تسجيل. الموقع يشتغل من متصفحك ويربطك بخوادم تنزيل عامة مفتوحة المصدر.</p></details>
+    <details><summary>تيك توك ينزل بدون علامة مائية؟</summary><p>إي — روابط تيك توك تنزل بنسخة نظيفة بدون علامة مائية، وبتلكي زر HD وزر للصوت MP3 هم.</p></details>
+    <details><summary>ليش مرات رابط ما يشتغل؟</summary><p>بعض المواقع تغيّر حمايتها بين فترة وفترة، أو الفيديو خاص/محذوف. جرّب مرة ثانية بعد شوية، أو جرّب جودة ثانية. الفيديوهات الخاصة والمحمية بحقوق مدفوعة ما تنزل.</p></details>
+    <details><summary>وين تنحفظ الفيديوهات؟</summary><p>مباشرة على جهازك بمجلد التنزيلات — الموقع ما يخزّن أي فيديو ولا أي رابط على خوادمه.</p></details>
+    <details><summary>هل هو قانوني؟</summary><p>الموقع أداة تنزيل للاستخدام الشخصي فقط. احترم حقوق النشر ولا تعيد نشر محتوى غيرك بدون إذن صاحبه.</p></details>
+  </section>
+
+  <footer>
+    <b>EtooDL | حمّلها</b> — صُنع بحب بواسطة سمرة 💛<br>
+    للاستخدام الشخصي فقط • احترم حقوق النشر © 2026
+  </footer>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const urlIn=$('url'),goBtn=$('goBtn'),statusEl=$('status'),resultEl=$('result'),detectEl=$('detect');
+
+const COBALT=[
+ "https://cobaltapi.kittycat.boo","https://dog.kittycat.boo",
+ "https://api.cobalt.liubquanti.click","https://cobaltapi.squair.xyz",
+ "https://rue-cobalt.xenon.zone","https://cobaltapi.cjs.nz",
+ "https://dwnld.nichind.dev","https://cobalt-backend.canine.tools",
+ "https://api.cobalt.tools"
+];
+const PIPED=["https://api.piped.private.coffee","https://pipedapi.wireway.ch"];
+
+function platformOf(u){
+  const s=u.toLowerCase();
+  if(/youtube\.com|youtu\.be/.test(s))return{youtube:true,name:"يوتيوب ▶️"};
+  if(/tiktok\.com/.test(s))return{tiktok:true,name:"تيك توك 🎵"};
+  if(/instagram\.com/.test(s))return{name:"انستغرام 📸"};
+  if(/facebook\.com|fb\.watch|fb\.com/.test(s))return{name:"فيسبوك 👍"};
+  if(/twitter\.com|x\.com/.test(s))return{name:"تويتر / X 𝕏"};
+  if(/vimeo\.com/.test(s))return{name:"فيميو 🎬"};
+  if(/dailymotion\.com|dai\.ly/.test(s))return{name:"ديلي موشن 📺"};
+  if(/twitch\.tv/.test(s))return{name:"تويتش 🟣"};
+  if(/soundcloud\.com/.test(s))return{name:"ساوند كلاود ☁️"};
+  if(/reddit\.com/.test(s))return{name:"ريديت 👽"};
+  if(/pinterest\./.test(s))return{name:"بينترست 📌"};
+  if(/snapchat\.com/.test(s))return{name:"سناب شات 👻"};
+  if(/^https?:\/\//.test(s))return{name:"موقع عام 🌍"};
+  return null;
+}
+function ytId(u){
+  const m=u.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|live\/|embed\/|v\/)|youtu\.be\/|music\.youtube\.com\/watch\?v=)([A-Za-z0-9_-]{11})/);
+  return m?m[1]:null;
+}
+function setStatus(html,kind){
+  statusEl.className="status show "+(kind||"work");
+  statusEl.innerHTML=html;
+}
+function clearStatus(){statusEl.className="status";statusEl.innerHTML=""}
+function fmtBytes(b){if(!b)return"";const u=["B","KB","MB","GB"];let i=0;while(b>=1024&&i<3){b/=1024;i++}return b.toFixed(1)+" "+u[i]}
+function esc(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function dlBtn(url,label,sub,gold){
+  return `<a class="dl${gold?" gold":""}" href="${esc(url)}" target="_blank" rel="noopener"><b>⬇️ ${esc(label)}</b>${sub?`<small>${esc(sub)}</small>`:""}</a>`;
+}
+function showResult(html){
+  resultEl.innerHTML=`<div class="rcard">${html}</div>`;
+  resultEl.classList.add("show");
+  resultEl.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function saveHistory(title,thumb,url){
+  try{
+    let h=JSON.parse(localStorage.getItem("etoodl_hist")||"[]");
+    h=h.filter(x=>x.url!==url);
+    h.unshift({title:title||url,thumb:thumb||"",url,at:Date.now()});
+    localStorage.setItem("etoodl_hist",JSON.stringify(h.slice(0,10)));
+    renderHistory();
+  }catch(e){}
+}
+function renderHistory(){
+  let h=[];try{h=JSON.parse(localStorage.getItem("etoodl_hist")||"[]")}catch(e){}
+  const sec=$('histSec'),list=$('histList');
+  if(!h.length){sec.classList.remove("show");return}
+  sec.classList.add("show");
+  list.innerHTML=h.map(x=>`<div class="hitem" data-u="${esc(x.url)}">${x.thumb?`<img src="${esc(x.thumb)}" alt="">`:""}<div><b>${esc(x.title)}</b><small>${esc(x.url)}</small></div></div>`).join("");
+  list.querySelectorAll(".hitem").forEach(el=>el.onclick=()=>{urlIn.value=el.dataset.u;updateDetect();window.scrollTo({top:0,behavior:"smooth"})});
+}
+$('histClear').onclick=()=>{localStorage.removeItem("etoodl_hist");renderHistory()};
+
+function updateDetect(){
+  const p=platformOf(urlIn.value.trim());
+  detectEl.innerHTML=p?`تم التعرف على: <b>${p.name}</b>`:"";
+}
+urlIn.addEventListener("input",updateDetect);
+urlIn.addEventListener("keydown",e=>{if(e.key==="Enter")go()});
+$('pasteBtn').onclick=async()=>{try{urlIn.value=await navigator.clipboard.readText();updateDetect()}catch(e){urlIn.focus()}};
+$('clearBtn').onclick=()=>{urlIn.value="";updateDetect();resultEl.classList.remove("show");clearStatus();urlIn.focus()};
+goBtn.onclick=go;
+
+async function fetchTimeout(url,opts,ms){
+  const c=new AbortController();const t=setTimeout(()=>c.abort(),ms||20000);
+  try{return await fetch(url,{...opts,signal:c.signal})}finally{clearTimeout(t)}
+}
+
+/* ---------- TikTok via TikWM ---------- */
+async function viaTikTok(url){
+  const r=await fetchTimeout("https://tikwm.com/api/?url="+encodeURIComponent(url)+"&hd=1",{},20000);
+  const j=await r.json();
+  if(!j||j.code!==0||!j.data)throw new Error("tikwm");
+  const d=j.data;
+  let btns="";
+  if(d.hdplay)btns+=dlBtn(d.hdplay,"HD بدون علامة مائية","أعلى جودة",true);
+  if(d.play)btns+=dlBtn(d.play,"بدون علامة مائية","جودة عادية",!d.hdplay);
+  if(d.wmplay)btns+=dlBtn(d.wmplay,"مع العلامة المائية","");
+  if(d.music)btns+=dlBtn(d.music,"الصوت MP3","الموسيقى فقط");
+  let imgs="";
+  if(Array.isArray(d.images)&&d.images.length){
+    imgs=`<div class="sec">🖼️ صور المنشور (${d.images.length}) — اضغط أي صورة لتنزيلها</div><div class="imgs">`+
+      d.images.map(i=>`<a href="${esc(i)}" target="_blank" rel="noopener"><img src="${esc(i)}" alt=""></a>`).join("")+"</div>";
+  }
+  showResult(`<div class="rhead">${d.cover?`<img src="${esc(d.cover)}" alt="">`:""}
+    <div><h3>${esc(d.title||"فيديو تيك توك")}</h3><div class="sub">تيك توك 🎵 ${d.author&&d.author.nickname?"• ‎"+esc(d.author.nickname):""}</div></div></div>
+    ${btns?`<div class="sec">روابط التنزيل</div><div class="dlgrid">${btns}</div>`:""}${imgs}`);
+  saveHistory(d.title||"فيديو تيك توك",d.cover,url);
+}
+
+/* ---------- YouTube via Piped ---------- */
+async function viaYouTube(url){
+  const id=ytId(url);if(!id)throw new Error("yt-id");
+  let data=null,lastErr=null;
+  for(const base of PIPED){
+    try{
+      const r=await fetchTimeout(base+"/streams/"+id,{},18000);
+      if(!r.ok)throw new Error(r.status);
+      data=await r.json();break;
+    }catch(e){lastErr=e}
+  }
+  if(!data)throw new Error("piped");
+  const want=parseInt($('quality').value,10);
+  const vs=(data.videoStreams||[]).filter(s=>s.url);
+  const combined=vs.filter(s=>!s.videoOnly);
+  const vonly=vs.filter(s=>s.videoOnly);
+  const height=s=>{const m=(s.quality||"").match(/(\d+)p/);return m?parseInt(m[1]):0};
+  combined.sort((a,b)=>height(b)-height(a));vonly.sort((a,b)=>height(b)-height(a));
+  const mode=$('mode').value;
+  let html=`<div class="rhead"><img src="${esc(data.thumbnailUrl||("https://i.ytimg.com/vi/"+id+"/hqdefault.jpg"))}" alt="">
+    <div><h3>${esc(data.title||"فيديو يوتيوب")}</h3><div class="sub">يوتيوب ▶️ ${data.uploader?"• ‎"+esc(data.uploader):""}</div></div></div>`;
+  const btnFor=s=>dlBtn(s.url,(s.quality||"فيديو")+" "+(s.format||"MP4"),fmtBytes(s.contentLength),height(s)===want);
+  if(mode!=="audio"&&combined.length){
+    html+=`<div class="sec">🎬 فيديو مع صوت — جاهز للمشاهدة</div><div class="dlgrid">${combined.map(btnFor).join("")}</div>`;
+  }
+  if(mode!=="audio"&&vonly.length){
+    html+=`<details><summary>⚡ جودات عالية (فيديو فقط، بدون صوت) — ${vonly.length} خيار</summary><div class="dlgrid" style="margin-top:9px">${vonly.map(btnFor).join("")}</div></details>`;
+  }
+  const as=(data.audioStreams||[]).filter(s=>s.url).sort((a,b)=>(b.bitrate||0)-(a.bitrate||0));
+  if(as.length){
+    html+=`<div class="sec">🎵 صوت فقط</div><div class="dlgrid">${as.slice(0,4).map(s=>dlBtn(s.url,"صوت "+(s.format||"M4A"),((s.bitrate?Math.round(s.bitrate/1000)+" kbps ":"")+fmtBytes(s.contentLength)).trim())).join("")}</div>`;
+  }
+  if(!combined.length&&!vonly.length&&!as.length)throw new Error("piped-empty");
+  showResult(html);
+  saveHistory(data.title||"فيديو يوتيوب",data.thumbnailUrl,url);
+}
+
+/* ---------- Everything else via Cobalt ---------- */
+async function viaCobalt(url){
+  const mode=$('mode').value;
+  const body={url,videoQuality:$('quality').value,downloadMode:mode,filenameStyle:"pretty",youtubeVideoCodec:"h264"};
+  let lastCode="";
+  for(const base of COBALT){
+    try{
+      const r=await fetchTimeout(base+"/",{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify(body)},20000);
+      const j=await r.json().catch(()=>null);
+      if(!j)continue;
+      if(j.status==="tunnel"||j.status==="redirect"){
+        showResult(`<div class="rhead"><div><h3>✅ الرابط جاهز للتنزيل</h3><div class="sub">${esc(j.filename||"")}</div></div></div>
+          <div class="dlgrid" style="margin-top:12px">${dlBtn(j.url,"تنزيل الملف",j.filename||"",true)}</div>
+          <p style="color:var(--mut);font-size:13px;margin-top:10px">إذا فتح الملف بالمتصفح بدل ما ينزل: اضغط مطولاً على الزر واختر «تنزيل» / «حفظ الرابط».</p>`);
+        saveHistory(j.filename||url,"",url);return;
+      }
+      if(j.status==="picker"&&Array.isArray(j.picker)&&j.picker.length){
+        const items=j.picker.map((p,i)=>dlBtn(p.url,p.type==="photo"?("صورة "+(i+1)):("ملف "+(i+1)),p.type||"",i===0)).join("");
+        let audio="";if(j.audio)audio=dlBtn(j.audio,"الصوت MP3","",false);
+        showResult(`<div class="rhead"><div><h3>✅ المنشور بيه ${j.picker.length} ملفات</h3><div class="sub">نزّل كل واحد على حدة</div></div></div>
+          <div class="dlgrid" style="margin-top:12px">${items}${audio}</div>`);
+        saveHistory(url,"",url);return;
+      }
+      if(j.status==="error"&&j.error&&j.error.code)lastCode=j.error.code;
+    }catch(e){/* next instance */}
+  }
+  throw new Error(lastCode||"cobalt");
+}
+
+async function go(){
+  let url=urlIn.value.trim();
+  if(!url){setStatus("⚠️ الصق رابط الفيديو أولاً.","err");urlIn.focus();return}
+  if(!/^https?:\/\//i.test(url))url="https://"+url;
+  urlIn.value=url;
+  const p=platformOf(url);
+  goBtn.disabled=true;goBtn.innerHTML='<span class="spin"></span> جاري جلب روابط التنزيل…';
+  resultEl.classList.remove("show");
+  setStatus('<span class="spin"></span> دا أدوّر على أفضل جودة متوفرة… لحظات ⏳',"work");
+  try{
+    if(p&&p.tiktok){await viaTikTok(url)}
+    else if(p&&p.youtube){
+      try{await viaYouTube(url)}catch(e){await viaCobalt(url)}
+    }
+    else{await viaCobalt(url)}
+    clearStatus();
+  }catch(e){
+    setStatus("❌ ما كدرت أجيب هالفيديو هسه. الأسباب المحتملة: الفيديو خاص أو محذوف، أو الموقع مغير حمايته مؤقتاً. جرّب مرة ثانية بعد شوية أو جرّب رابط ثاني.","err");
+  }finally{
+    goBtn.disabled=false;goBtn.innerHTML="⬇️ حمّل هسه";
+  }
+}
+renderHistory();
+</script>
+</body>
+</html>
